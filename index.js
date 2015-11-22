@@ -1,7 +1,7 @@
-module.exports = emitter
+module.exports = Emitter
 
 // Emitter([constructor:Function(emit:Function(args...))]) -> emitter:Function
-function emitter(constructor) {
+function Emitter(constructor) {
   if("function" == typeof constructor) {
     constructor(emit)
   }else{
@@ -10,24 +10,28 @@ function emitter(constructor) {
   
   var listeners = []
   
-  return function (listener) {
-    // emitter(listener:Function) -> removeListener:Function
-    if(arguments.length == 1 && "function" == typeof listener) {
-      var newLength = listeners.push(listener)
-        , index = newLength-1
-        , removed = false
-      
-      return function removeListener() {
-        if(removed) return
-        removed = true
-        listeners.splice(index, 1)
-      }
+  // emitter(listener:Function) -> removeListener:Function
+  var emitter = function (listener) {
+    if("function" !== typeof listener) {
+      throw new Error('Listener must be a function')
     }
+    var newLength = listeners.push(listener)
+      , index = newLength-1
+      , removed = false
     
-    // emitter(args...)
-    if(constructor) throw new Error('Emitting an event is private for this atomic-emitter')
-    emit.apply(null, arguments)
+    return function removeListener() {
+      if(removed) return
+      removed = true
+      listeners.splice(index, 1)
+    }
   }
+  
+  if(!constructor) {
+    // emitter.emit(args...)
+    emitter.emit = emit
+  }
+  
+  return emitter
   
   function emit() {
     // emitter(args...)

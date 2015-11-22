@@ -15,7 +15,7 @@ describe('atomic-emitter', function() {
       result.push(value)
     })
 
-    values.forEach(emitter)
+    values.forEach(emitter.emit)
 
     setTimeout(function() {
       expect(result).to.eql(values)
@@ -33,7 +33,7 @@ describe('atomic-emitter', function() {
       if(value === END) removeListener()
     })
     
-    values.forEach(emitter)
+    values.forEach(emitter.emit)
 
     setTimeout(function() {
       expect(result).to.eql([1,2,3,END])
@@ -56,7 +56,7 @@ describe('atomic-emitter', function() {
     values.forEach(emit)
     
     expect(function () {
-      emitter(4)
+      emitter.emit(4)
     }).to.throwError()
 
     setTimeout(function() {
