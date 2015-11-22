@@ -14,7 +14,7 @@ var removeListener = clicksEmitter(function listener(ev, time) {
 })
 
 document.addEventListener("click", function (ev) {
-    clicksEmitter(ev, +Date())
+    clicksEmitter.emit(ev, +Date())
 })
 
 // ...
@@ -37,7 +37,7 @@ var removeListener = clicksEmitter(function listener(ev) {
     console.log('click happened', ev)
 })
 
-clicksEmitter({test: true}) // Will throw an exception
+clicksEmitter.emit({test: true}) // Will throw an exception
 
 // ...
 
