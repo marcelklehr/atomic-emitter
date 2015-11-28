@@ -9,9 +9,15 @@ function Emitter(constructor) {
   }
   
   var listeners = []
-  
+
   // emitter(listener:Function) -> removeListener:Function
+  // emitter() -> emitter:function
   var emitter = function (listener) {
+    // emitter() -> emitter:function
+    if(!listener) {
+      return emitter
+    }
+    // emitter(listener:Function) -> removeListener:Function
     if("function" !== typeof listener) {
       throw new Error('Listener must be a function')
     }
@@ -34,7 +40,6 @@ function Emitter(constructor) {
   return emitter
   
   function emit() {
-    // emitter(args...)
     var args = arguments
     listeners.forEach(function(listener) {
       listener.apply(null, args)

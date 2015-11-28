@@ -65,4 +65,10 @@ describe('atomic-emitter', function() {
     }, 0)
   })
 
+  it('should return itself when called without arguments', function() {
+    var emitter = Emitter()
+
+    expect(emitter()).to.be(emitter)
+  })
+
 })
