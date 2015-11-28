@@ -1,6 +1,6 @@
 {
   "name": "atomic-emitter",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "An atomic event emitter that can only emit one type of event, optionally with private write access.",
   "main": "index.js",
   "scripts": {
